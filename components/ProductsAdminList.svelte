@@ -17,7 +17,7 @@
 	import Button from '$liwe3/components/Button.svelte';
 	import Modal from '$liwe3/components/Modal.svelte';
 	import ProductEdit from './ProductEdit.svelte';
-	import { categoryStoreList, categoriesLoad } from '$modules/category/store.svelte';
+	import { categoryGetById, categoriesLoad } from '$modules/category/store.svelte';
 
 	const fields: GridField[] = [
 		{ name: 'id', label: 'ID', type: 'string', hidden: true },
@@ -30,7 +30,7 @@
 			label: 'Category',
 			type: 'string',
 			render: (value: string, row: GridDataRow) => {
-				return categoryStoreList[value]?.title ?? '';
+				return categoryGetById(value)?.title ?? '';
 			}
 		}
 	];
