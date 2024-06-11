@@ -25,8 +25,8 @@
 		{ name: 'code', label: 'Code', type: 'string', filterable: true },
 		{ name: 'name', label: 'Name', type: 'string', filterable: true },
 		{ name: 'short_description', label: 'Description', type: 'string' },
-		{ name: 'price', label: 'Price', type: 'number' },
-		{ name: 'quantity', label: 'Quantity', type: 'number' },
+		{ name: 'curr_price_vat', label: 'Price', type: 'number', align: 'right' },
+		{ name: 'quant', label: 'Quantity', type: 'number', align: 'right' },
 		{
 			name: 'category',
 			label: 'Category',
