@@ -16,7 +16,7 @@
 		{ name: 'code_forn', label: 'Code Forn', type: 'text', col: 4 },
 		{ name: 'sku', label: 'SKU', type: 'text', col: 4 },
 		{ name: 'name', label: 'Name', type: 'text', col: 4 },
-		{ name: 'short_descr', label: 'Short Description', type: 'text', col: 4 },
+		{ name: 'short_description', label: 'Short Description', type: 'text', col: 4 },
 		{ name: 'url', label: 'URL', type: 'text', col: 4 },
 		{ name: 'description', label: 'Description', type: 'markdown' },
 
