@@ -18,11 +18,13 @@
 	import Modal from '$liwe3/components/Modal.svelte';
 	import ProductEdit from './ProductEdit.svelte';
 	import { categoryGetById, categoriesLoad } from '$modules/category/store.svelte';
+	import { addToast } from '$liwe3/stores/ToastStore.svelte';
 
 	const fields: GridField[] = [
 		{ name: 'id', label: 'ID', type: 'string', hidden: true },
+		{ name: 'code', label: 'Code', type: 'string', filterable: true },
 		{ name: 'name', label: 'Name', type: 'string', filterable: true },
-		{ name: 'description', label: 'Description', type: 'string' },
+		{ name: 'short_description', label: 'Description', type: 'string' },
 		{ name: 'price', label: 'Price', type: 'number' },
 		{ name: 'quantity', label: 'Quantity', type: 'number' },
 		{
@@ -122,6 +124,16 @@
 			res = await product_admin_fields(currProduct.id, currProduct);
 		}
 
+		if (res.error) {
+			addToast({
+				type: 'error',
+				title: 'Error',
+				message: res.error.message
+			});
+
+			return;
+		}
+
 		await updateProducts();
 		editProductModal = false;
 	};
@@ -133,8 +145,9 @@
 
 		if (!prods) return;
 
-		data = [];
+		data = prods;
 
+		/*
 		prods.forEach((prod: Product) => {
 			data.push({
 				id: prod.id,
@@ -145,6 +158,7 @@
 				category: prod.id_category
 			});
 		});
+		*/
 	};
 
 	onMount(async () => {
