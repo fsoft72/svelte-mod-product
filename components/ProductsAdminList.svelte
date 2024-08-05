@@ -8,6 +8,7 @@
 	import { PencilSquare, Trash } from 'svelte-hero-icons';
 	import {
 		product_admin_add,
+		product_admin_del,
 		product_admin_details,
 		product_admin_fields,
 		product_admin_list
@@ -51,14 +52,16 @@
 			label: 'Delete',
 			icon: Trash,
 			mode: 'danger',
-			action: (row: GridDataRow) => {
-				console.log('Delete', row);
+			action: async (row: GridDataRow) => {
+				currProduct = row as Product;
+				deleteProductModal = true;
 			}
 		}
 	];
 
 	let data: GridDataRow[] = $state([]);
 	let editProductModal = $state(false);
+	let deleteProductModal = $state(false);
 	let currProduct: Product | null = $state(null);
 
 	const createNewProduct = () => {
@@ -161,6 +164,25 @@
 		*/
 	};
 
+	const deleteProduct = async () => {
+		if (!currProduct) return;
+
+		const res = await product_admin_del(currProduct.id);
+
+		if (res.error) {
+			addToast({
+				type: 'error',
+				title: 'Error',
+				message: res.error.message
+			});
+
+			return;
+		}
+
+		await updateProducts();
+		deleteProductModal = false;
+	};
+
 	onMount(async () => {
 		await categoriesLoad();
 		await updateProducts();
@@ -181,6 +203,22 @@
 		oncancel={() => (editProductModal = false)}
 	>
 		<ProductEdit product={currProduct!} {onsave} />
+	</Modal>
+{/if}
+
+{#if deleteProductModal}
+	<Modal
+		title="Product"
+		onclose={() => (deleteProductModal = false)}
+		oncancel={() => (deleteProductModal = false)}
+	>
+		<div>
+			<p>Are you sure you want to delete this product?</p>
+			<p>{currProduct?.name}</p>
+			<div class="buttons">
+				<Button mode="danger" onclick={deleteProduct}>Delete</Button>
+			</div>
+		</div>
 	</Modal>
 {/if}
 
