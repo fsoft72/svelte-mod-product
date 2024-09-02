@@ -180,7 +180,9 @@
 	<div class="buttons">
 		<Button mode="success" onclick={createNewProduct}>New Product</Button>
 	</div>
-	<DataGrid {fields} {data} {actions} />
+	{#key data}
+		<DataGrid title="Products list" {fields} {data} {actions} />
+	{/key}
 </div>
 
 {#if editProductModal}
