@@ -149,19 +149,6 @@
 		if (!prods) return;
 
 		data = prods;
-
-		/*
-        prods.forEach((prod: Product) => {
-            data.push({
-                id: prod.id,
-                name: prod.name,
-                description: prod.description,
-                price: prod.curr_price_vat,
-                quantity: prod.quant,
-                category: prod.id_category
-            });
-        });
-        */
 	};
 
 	const deleteProduct = async () => {
