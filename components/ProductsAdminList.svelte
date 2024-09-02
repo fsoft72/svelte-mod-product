@@ -1,8 +1,8 @@
 <script lang="ts">
 	import DataGrid, {
-		type GridAction,
-		type GridDataRow,
-		type GridField
+		type DataGridAction,
+		type DataGridField,
+		type DataGridRow
 	} from '$liwe3/components/DataGrid.svelte';
 
 	import { PencilSquare, Trash } from 'svelte-hero-icons';
@@ -21,7 +21,7 @@
 	import { categoryGetById, categoriesLoad } from '$modules/category/store.svelte';
 	import { addToast } from '$liwe3/stores/ToastStore.svelte';
 
-	const fields: GridField[] = [
+	const fields: DataGridField[] = [
 		{ name: 'id', label: 'ID', type: 'string', hidden: true },
 		{ name: 'code', label: 'Code', type: 'string', filterable: true },
 		{ name: 'name', label: 'Name', type: 'string', filterable: true },
@@ -32,18 +32,18 @@
 			name: 'category',
 			label: 'Category',
 			type: 'string',
-			render: (value: string, row: GridDataRow) => {
+			render: (value: string, row: DataGridRow) => {
 				return categoryGetById(value)?.title ?? '';
 			}
 		}
 	];
 
-	const actions: GridAction[] = [
+	const actions: DataGridAction[] = [
 		{
 			id: 'edit',
 			label: 'Edit',
 			icon: PencilSquare,
-			action: (row: GridDataRow) => {
+			onclick: (row: DataGridRow) => {
 				editProduct(row);
 			}
 		},
@@ -52,14 +52,14 @@
 			label: 'Delete',
 			icon: Trash,
 			mode: 'danger',
-			action: async (row: GridDataRow) => {
+			onclick: async (row: DataGridRow) => {
 				currProduct = row as Product;
 				deleteProductModal = true;
 			}
 		}
 	];
 
-	let data: GridDataRow[] = $state([]);
+	let data: DataGridRow[] = $state([]);
 	let editProductModal = $state(false);
 	let deleteProductModal = $state(false);
 	let currProduct: Product | null = $state(null);
@@ -72,7 +72,7 @@
 		editProductModal = true;
 	};
 
-	const editProduct = async (row: GridDataRow) => {
+	const editProduct = async (row: DataGridRow) => {
 		const prod: Product = await product_admin_details(row.id);
 
 		currProduct = prod;
@@ -151,17 +151,17 @@
 		data = prods;
 
 		/*
-		prods.forEach((prod: Product) => {
-			data.push({
-				id: prod.id,
-				name: prod.name,
-				description: prod.description,
-				price: prod.curr_price_vat,
-				quantity: prod.quant,
-				category: prod.id_category
-			});
-		});
-		*/
+        prods.forEach((prod: Product) => {
+            data.push({
+                id: prod.id,
+                name: prod.name,
+                description: prod.description,
+                price: prod.curr_price_vat,
+                quantity: prod.quant,
+                category: prod.id_category
+            });
+        });
+        */
 	};
 
 	const deleteProduct = async () => {
