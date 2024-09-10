@@ -18,13 +18,13 @@
 	import Button from '$liwe3/components/Button.svelte';
 	import Modal from '$liwe3/components/Modal.svelte';
 	import ProductEdit from './ProductEdit.svelte';
-	import { categoryGetById, categoriesLoad } from '$modules/category/store.svelte';
+	import { storeCategory } from '$modules/category/store.svelte';
 	import { addToast } from '$liwe3/stores/ToastStore.svelte';
 
 	const fields: DataGridField[] = [
 		{ name: 'id', label: 'ID', type: 'string', hidden: true },
-		{ name: 'code', label: 'Code', type: 'string', filterable: true },
-		{ name: 'name', label: 'Name', type: 'string', filterable: true },
+		{ name: 'code', label: 'Code', type: 'string', filterable: true, sortable: true },
+		{ name: 'name', label: 'Name', type: 'string', filterable: true, sortable: true },
 		{ name: 'short_description', label: 'Description', type: 'string' },
 		{ name: 'curr_price_vat', label: 'Price', type: 'number', align: 'right' },
 		{ name: 'quant', label: 'Quantity', type: 'number', align: 'right' },
@@ -33,7 +33,7 @@
 			label: 'Category',
 			type: 'string',
 			render: (value: string, row: DataGridRow) => {
-				return categoryGetById(value)?.title ?? '';
+				return storeCategory.get(value)?.title ?? '';
 			}
 		}
 	];
@@ -171,7 +171,7 @@
 	};
 
 	onMount(async () => {
-		await categoriesLoad();
+		await storeCategory.load();
 		await updateProducts();
 	});
 </script>
