@@ -46,8 +46,9 @@
 	};
 
 	const fields: FormField[] = [
-		{ name: 'code', label: 'Code', type: 'text', col: 4 },
-		{ name: 'code_forn', label: 'Code Forn', type: 'text', col: 4 },
+		{ name: 'id_category', label: 'Category', type: 'category', col: 12 },
+		{ name: 'code', label: 'Code', type: 'text', col: 3 },
+		{ name: 'code_forn', label: 'Code Forn', type: 'text', col: 3 },
 		{ name: 'sku', label: 'SKU', type: 'text', col: 4 },
 		{ name: 'name', label: 'Name', type: 'text', col: 4 },
 		{ name: 'short_description', label: 'Short Description', type: 'text', col: 4 },
@@ -87,8 +88,7 @@
 		{ name: 'height', label: 'Height (mm)', type: 'number', col: 1 },
 		{ name: 'depth', label: 'Depth (mm)', type: 'number', col: 1 },
 		{ name: 'tags', label: 'Tags', type: 'tags', col: 4 },
-		{ name: 'image', label: 'Image', type: 'media', col: 4 },
-		{ name: 'id_category', label: 'Category', type: 'category', col: 4 }
+		{ name: 'image', label: 'Image', type: 'media', col: 4 }
 	];
 
 	const onsubmit = (data: any) => {

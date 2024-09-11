@@ -1,6 +1,7 @@
 <script lang="ts">
 	import DataGrid, {
 		type DataGridAction,
+		type DataGridButton,
 		type DataGridField,
 		type DataGridRow
 	} from '$liwe3/components/DataGrid.svelte';
@@ -29,7 +30,7 @@
 		{ name: 'curr_price_vat', label: 'Price', type: 'number', align: 'right' },
 		{ name: 'quant', label: 'Quantity', type: 'number', align: 'right' },
 		{
-			name: 'category',
+			name: 'id_category',
 			label: 'Category',
 			type: 'string',
 			render: (value: string, row: DataGridRow) => {
@@ -63,6 +64,7 @@
 	let editProductModal = $state(false);
 	let deleteProductModal = $state(false);
 	let currProduct: Product | null = $state(null);
+	let filters: Record<string, any> = $state({});
 
 	const createNewProduct = () => {
 		currProduct = {
@@ -71,6 +73,15 @@
 
 		editProductModal = true;
 	};
+
+	const buttons: DataGridButton[] = [
+		{
+			label: 'Add',
+			icon: PencilSquare,
+			mode: 'success',
+			onclick: createNewProduct
+		}
+	];
 
 	const editProduct = async (row: DataGridRow) => {
 		const prod: Product = await product_admin_details(row.id);
@@ -181,7 +192,7 @@
 		<Button mode="success" onclick={createNewProduct}>New Product</Button>
 	</div>
 	{#key data}
-		<DataGrid title="Products list" {fields} {data} {actions} />
+		<DataGrid title="Products list" {fields} {data} {actions} {buttons} bind:filters />
 	{/key}
 </div>
 
