@@ -88,7 +88,7 @@
 		{ name: 'depth', label: 'Depth (mm)', type: 'number', col: 1 },
 		{ name: 'tags', label: 'Tags', type: 'tags', col: 4 },
 		{ name: 'image', label: 'Image', type: 'media', col: 4 },
-		{ name: 'category', label: 'Category', type: 'category', col: 4 }
+		{ name: 'id_category', label: 'Category', type: 'category', col: 4 }
 	];
 
 	const onsubmit = (data: any) => {
@@ -97,7 +97,7 @@
 </script>
 
 <div class="container">
-	<FormCreator {fields} {onsubmit} values={product} />
+	<FormCreator {fields} {onsubmit} bind:values={product as Product} />
 </div>
 
 <style>
