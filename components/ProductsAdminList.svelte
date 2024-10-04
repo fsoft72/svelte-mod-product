@@ -21,6 +21,7 @@
 	import ProductEdit from './ProductEdit.svelte';
 	import { storeCategory } from '$modules/category/store.svelte';
 	import { addToast } from '$liwe3/stores/ToastStore.svelte';
+	import { runeDebug } from '$liwe3/utils/runes.svelte';
 
 	const fields: DataGridField[] = [
 		{ name: 'id', label: 'ID', type: 'string', hidden: true },
@@ -29,6 +30,25 @@
 		{ name: 'short_description', label: 'Description', type: 'string' },
 		{ name: 'curr_price_vat', label: 'Price', type: 'number', align: 'right' },
 		{ name: 'quant', label: 'Quantity', type: 'number', align: 'right' },
+		{
+			name: 'visible',
+			label: 'Visible',
+			type: 'boolean',
+			align: 'center',
+			onclick: async (row: DataGridRow) => {
+				await product_admin_fields(row.id, { visible: row.visible });
+			}
+		},
+		/*
+		{
+			name: 'id_maker',
+			label: 'Maker',
+			type: 'string',
+			render: (value: string, row: DataGridRow) => {
+				// return storeMaker.get(value)?.title ?? '';
+			}
+		},
+		*/
 		{
 			name: 'id_category',
 			label: 'Category',
