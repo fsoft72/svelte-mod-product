@@ -21,6 +21,7 @@
 	import ProductEdit from './ProductEdit.svelte';
 	import { storeCategory } from '$modules/category/store.svelte';
 	import { addToast } from '$liwe3/stores/ToastStore.svelte';
+	import Spinner from '$liwe3/components/Spinner.svelte';
 
 	const fields: DataGridField[] = [
 		{ name: 'id', label: 'ID', type: 'string', hidden: true },
@@ -66,7 +67,11 @@
 		{
 			name: 'id_category',
 			label: 'Category',
-			type: 'string',
+			type: 'select',
+			editable: true,
+			options: {
+				select: storeCategory.list()
+			},
 			render: (value: string, row: DataGridRow) => {
 				return storeCategory.get(value)?.title ?? '';
 			}
@@ -240,23 +245,30 @@
 		await updateProducts();
 	};
 
+	let isReady = $state(false);
+
 	onMount(async () => {
-		await storeCategory.load();
+		// await storeCategory.load();
 		await updateProducts();
+		isReady = true;
 	});
 </script>
 
 <div class="container">
-	<DataGrid
-		title="Products list"
-		{fields}
-		{data}
-		{actions}
-		{buttons}
-		rowsPerPage={20}
-		{oncelledit}
-		bind:filters
-	/>
+	{#if isReady}
+		<DataGrid
+			title="Products list"
+			{fields}
+			{data}
+			{actions}
+			{buttons}
+			rowsPerPage={20}
+			{oncelledit}
+			bind:filters
+		/>
+	{:else}
+		<Spinner />
+	{/if}
 </div>
 
 {#if editProductModal}
