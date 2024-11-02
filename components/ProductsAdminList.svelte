@@ -21,15 +21,29 @@
 	import ProductEdit from './ProductEdit.svelte';
 	import { storeCategory } from '$modules/category/store.svelte';
 	import { addToast } from '$liwe3/stores/ToastStore.svelte';
-	import { runeDebug } from '$liwe3/utils/runes.svelte';
 
 	const fields: DataGridField[] = [
 		{ name: 'id', label: 'ID', type: 'string', hidden: true },
 		{ name: 'code', label: 'Code', type: 'string', filterable: true, sortable: true },
-		{ name: 'name', label: 'Name', type: 'string', filterable: true, sortable: true },
-		{ name: 'short_description', label: 'Description', type: 'string' },
-		{ name: 'curr_price_vat', label: 'Price', type: 'number', align: 'right' },
-		{ name: 'quant', label: 'Quantity', type: 'number', align: 'right' },
+		{
+			name: 'name',
+			label: 'Name',
+			type: 'string',
+			filterable: true,
+			sortable: true,
+			editable: true
+		},
+		{ name: 'description', label: 'Description', type: 'string', editable: true },
+		{ name: 'short_description', label: 'Short Descr', type: 'string', editable: true },
+		{ name: 'curr_price_vat', label: 'Price', type: 'number', align: 'right', editable: true },
+		{
+			name: 'quant',
+			label: 'Quantity',
+			type: 'number',
+			align: 'right',
+			sortable: true,
+			editable: true
+		},
 		{
 			name: 'visible',
 			label: 'Visible',
@@ -201,6 +215,31 @@
 		deleteProductModal = false;
 	};
 
+	const oncelledit = async (row: DataGridRow, field: string, oldValue: any, newValue: any) => {
+		const data = { [field]: newValue };
+
+		// if the field is 'curr_price_vat' we need to calc also the 'curr_price_net'
+		if (field === 'curr_price_vat') {
+			const vat = row.vat ?? 0;
+			const price_vat = newValue;
+			const price_net = price_vat / (1 + vat / 100);
+
+			// truncate price_net to 2 decimal places
+			data['curr_price_net'] = Math.round(price_net * 100) / 100;
+		}
+
+		const res = await product_admin_fields(row.id, data);
+		if (res.error) {
+			addToast({
+				type: 'error',
+				title: 'Error',
+				message: res.error.message
+			});
+		}
+
+		await updateProducts();
+	};
+
 	onMount(async () => {
 		await storeCategory.load();
 		await updateProducts();
@@ -208,12 +247,16 @@
 </script>
 
 <div class="container">
-	<div class="buttons">
-		<Button mode="success" onclick={createNewProduct}>New Product</Button>
-	</div>
-	{#key data}
-		<DataGrid title="Products list" {fields} {data} {actions} {buttons} bind:filters />
-	{/key}
+	<DataGrid
+		title="Products list"
+		{fields}
+		{data}
+		{actions}
+		{buttons}
+		rowsPerPage={20}
+		{oncelledit}
+		bind:filters
+	/>
 </div>
 
 {#if editProductModal}
