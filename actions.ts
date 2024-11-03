@@ -7,7 +7,7 @@
 
 /*=== f2c_end __file ===*/
 
-import { get, patch, post, delete_ } from '$liwe3/utils/fetcher';
+import { get, patch, post, delete_, type LiWEFetcherOptions } from '$liwe3/utils/fetcher';
 
 /**
  * Adds product in the system.
@@ -48,7 +48,7 @@ import { get, patch, post, delete_ } from '$liwe3/utils/fetcher';
  * @return product: Product
  *
  */
-export const product_admin_add = async ( name: string, code?: string, id_maker?: string, id_category?: string, id_availability?: number, code_forn?: string, sku?: string, description?: string, short_description?: string, url?: string, cost?: number, price_net?: number, price_vat?: number, curr_price_net?: number, curr_price_vat?: number, vat?: number, free?: boolean, discount?: number, quant?: number, ordered?: number, available?: Date, level?: number, visible?: boolean, relevance?: number, status?: number, weight?: number, width?: number, height?: number, depth?: number, tags?: string[], single?: boolean ) => {
+export const product_admin_add = async ( name: string, code?: string, id_maker?: string, id_category?: string, id_availability?: number, code_forn?: string, sku?: string, description?: string, short_description?: string, url?: string, cost?: number, price_net?: number, price_vat?: number, curr_price_net?: number, curr_price_vat?: number, vat?: number, free?: boolean, discount?: number, quant?: number, ordered?: number, available?: Date, level?: number, visible?: boolean, relevance?: number, status?: number, weight?: number, width?: number, height?: number, depth?: number, tags?: string[], single?: boolean, _options?: LiWEFetcherOptions ) => {
 	const res = await post( `/api/product/admin/add`, { 
 		available,
 		code,
@@ -81,7 +81,7 @@ export const product_admin_add = async ( name: string, code?: string, id_maker?:
 		visible,
 		weight,
 		width
-	 }, true );
+	 }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -131,7 +131,7 @@ export const product_admin_add = async ( name: string, code?: string, id_maker?:
  * @return product: Product
  *
  */
-export const product_admin_update = async ( id: string, name?: string, code?: string, id_maker?: string, id_category?: string, id_availability?: number, code_forn?: string, sku?: string, description?: string, short_description?: string, url?: string, cost?: number, price_net?: number, price_vat?: number, curr_price_net?: number, curr_price_vat?: number, vat?: number, free?: boolean, discount?: number, quant?: number, ordered?: number, available?: Date, level?: number, visible?: boolean, relevance?: number, status?: number, weight?: number, width?: number, height?: number, depth?: number, tags?: string[] ) => {
+export const product_admin_update = async ( id: string, name?: string, code?: string, id_maker?: string, id_category?: string, id_availability?: number, code_forn?: string, sku?: string, description?: string, short_description?: string, url?: string, cost?: number, price_net?: number, price_vat?: number, curr_price_net?: number, curr_price_vat?: number, vat?: number, free?: boolean, discount?: number, quant?: number, ordered?: number, available?: Date, level?: number, visible?: boolean, relevance?: number, status?: number, weight?: number, width?: number, height?: number, depth?: number, tags?: string[], _options?: LiWEFetcherOptions ) => {
 	const res = await patch( `/api/product/admin/update`, { 
 		available,
 		code,
@@ -164,7 +164,7 @@ export const product_admin_update = async ( id: string, name?: string, code?: st
 		visible,
 		weight,
 		width
-	 }, true );
+	 }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -185,8 +185,8 @@ export const product_admin_update = async ( id: string, name?: string, code?: st
  * @return product: Product
  *
  */
-export const product_admin_fields = async ( id: string, data: any ) => {
-	const res = await patch( `/api/product/admin/fields`, { id, data }, true );
+export const product_admin_fields = async ( id: string, data: any, _options?: LiWEFetcherOptions ) => {
+	const res = await patch( `/api/product/admin/fields`, { id, data }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -209,8 +209,8 @@ export const product_admin_fields = async ( id: string, data: any ) => {
  * @return products: Product
  *
  */
-export const product_admin_list = async ( id_category?: string, skip: number = 0, rows: number = -1 ) => {
-	const res = await get( `/api/product/admin/list`, { id_category, skip, rows }, true );
+export const product_admin_list = async ( id_category?: string, skip: number = 0, rows: number = -1, _options?: LiWEFetcherOptions ) => {
+	const res = await get( `/api/product/admin/list`, { id_category, skip, rows }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -229,8 +229,8 @@ export const product_admin_list = async ( id_category?: string, skip: number = 0
  * @return id: str
  *
  */
-export const product_admin_del = async ( id: string ) => {
-	const res = await delete_( `/api/product/admin/del`, { id }, true );
+export const product_admin_del = async ( id: string, _options?: LiWEFetcherOptions ) => {
+	const res = await delete_( `/api/product/admin/del`, { id }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -250,8 +250,8 @@ export const product_admin_del = async ( id: string ) => {
  * @return product: Product
  *
  */
-export const product_admin_tag = async ( id: string, tags: string[] ) => {
-	const res = await get( `/api/product/admin/tag`, { id, tags }, true );
+export const product_admin_tag = async ( id: string, tags: string[], _options?: LiWEFetcherOptions ) => {
+	const res = await get( `/api/product/admin/tag`, { id, tags }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -275,8 +275,8 @@ export const product_admin_tag = async ( id: string, tags: string[] ) => {
  * @return product: Product
  *
  */
-export const product_details = async ( id?: string, code?: string, code_forn?: string ) => {
-	const res = await get( `/api/product/details`, { id, code, code_forn }, false );
+export const product_details = async ( id?: string, code?: string, code_forn?: string, _options?: LiWEFetcherOptions ) => {
+	const res = await get( `/api/product/details`, { id, code, code_forn }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -300,8 +300,8 @@ export const product_details = async ( id?: string, code?: string, code_forn?: s
  * @return products: Product
  *
  */
-export const product_list = async ( id_category?: string, skip: number = 0, rows: number = -1 ) => {
-	const res = await get( `/api/product/list`, { id_category, skip, rows }, false );
+export const product_list = async ( id_category?: string, skip: number = 0, rows: number = -1, _options?: LiWEFetcherOptions ) => {
+	const res = await get( `/api/product/list`, { id_category, skip, rows }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -320,8 +320,8 @@ export const product_list = async ( id_category?: string, skip: number = 0, rows
  * @return product: Product
  *
  */
-export const product_admin_details = async ( id: string ) => {
-	const res = await get( `/api/product/admin/details`, { id }, true );
+export const product_admin_details = async ( id: string, _options?: LiWEFetcherOptions ) => {
+	const res = await get( `/api/product/admin/details`, { id }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -330,4 +330,22 @@ export const product_admin_details = async ( id: string ) => {
 	/*=== f2c_end product_admin_details ===*/
 
 	return res.product;
+};
+
+/**
+ * @param file - CSV File to read [req]
+ *
+ * @return products: int
+ *
+ */
+export const product_admin_import_csv = async ( file: File, _options?: LiWEFetcherOptions ) => {
+	const res = await post( `/api/product/admin/import/csv`, { file }, _options?.skipError ? _options.skipError : false );
+
+	if (res.error) return res;
+
+	/*=== f2c_start product_admin_import_csv ===*/
+
+	/*=== f2c_end product_admin_import_csv ===*/
+
+	return res.products;
 };
