@@ -19,7 +19,7 @@
 	import Button from '$liwe3/components/Button.svelte';
 	import Modal from '$liwe3/components/Modal.svelte';
 	import ProductEdit from './ProductEdit.svelte';
-	import { storeCategory } from '$modules/category/store.svelte';
+	import storeCategory from '$modules/category/store.svelte';
 	import { addToast } from '$liwe3/stores/ToastStore.svelte';
 	import Spinner from '$liwe3/components/Spinner.svelte';
 
