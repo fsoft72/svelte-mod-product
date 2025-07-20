@@ -89,7 +89,7 @@ export const product_admin_add = async ( name: string, code?: string, id_maker?:
 
 	/*=== f2c_end product_admin_add ===*/
 
-	return res.product;
+	return res.data;
 };
 
 /**
@@ -172,7 +172,7 @@ export const product_admin_update = async ( id: string, name?: string, code?: st
 
 	/*=== f2c_end product_admin_update ===*/
 
-	return res.product;
+	return res.data;
 };
 
 /**
@@ -194,7 +194,7 @@ export const product_admin_fields = async ( id: string, data: any, _options?: Li
 
 	/*=== f2c_end product_admin_fields ===*/
 
-	return res.product;
+	return res.data;
 };
 
 /**
@@ -218,7 +218,7 @@ export const product_admin_list = async ( id_category?: string, skip: number = 0
 
 	/*=== f2c_end product_admin_list ===*/
 
-	return res.products;
+	return res.data;
 };
 
 /**
@@ -238,28 +238,7 @@ export const product_admin_del = async ( id: string, _options?: LiWEFetcherOptio
 
 	/*=== f2c_end product_admin_del ===*/
 
-	return res.id;
-};
-
-/**
- * This endpoint allows you to add tags to a product.
- *
- * @param id - The product ID [req]
- * @param tags - A list of tags to be added to the user [req]
- *
- * @return product: Product
- *
- */
-export const product_admin_tag = async ( id: string, tags: string[], _options?: LiWEFetcherOptions ) => {
-	const res = await get( `/api/product/admin/tag`, { id, tags }, _options?.skipError ? _options.skipError : false );
-
-	if (res.error) return res;
-
-	/*=== f2c_start product_admin_tag ===*/
-
-	/*=== f2c_end product_admin_tag ===*/
-
-	return res.product;
+	return res.data;
 };
 
 /**
@@ -284,7 +263,7 @@ export const product_details = async ( id?: string, code?: string, code_forn?: s
 
 	/*=== f2c_end product_details ===*/
 
-	return res.product;
+	return res.data;
 };
 
 /**
@@ -309,7 +288,7 @@ export const product_list = async ( id_category?: string, skip: number = 0, rows
 
 	/*=== f2c_end product_list ===*/
 
-	return res.products;
+	return res.data;
 };
 
 /**
@@ -329,7 +308,7 @@ export const product_admin_details = async ( id: string, _options?: LiWEFetcherO
 
 	/*=== f2c_end product_admin_details ===*/
 
-	return res.product;
+	return res.data;
 };
 
 /**
@@ -347,5 +326,5 @@ export const product_admin_import_csv = async ( file: File, _options?: LiWEFetch
 
 	/*=== f2c_end product_admin_import_csv ===*/
 
-	return res.products;
+	return res.data;
 };
